@@ -1,0 +1,7 @@
+# =========================
+# Dataset
+# Ignore everything in data/
+# but keep the folder itself with a placeholder
+# =========================
+data/*
+!data/.gitkeep

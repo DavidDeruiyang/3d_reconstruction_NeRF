@@ -223,5 +223,5 @@ def summarize_llff(scene_dir: str | Path) -> None:
 if __name__ == "__main__":
     # Example usage:
     # python datasets/llff.py
-    default_scene = Path("data/llff/fern")
+    default_scene = Path("data/nerf_llff_data/fern")
     summarize_llff(default_scene)

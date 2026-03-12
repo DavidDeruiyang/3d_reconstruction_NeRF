@@ -76,7 +76,7 @@ class NeRF(nn.Module):
                 h = torch.cat([h, input_x], dim=-1)
             h = F.relu(layer(h))
 
-        sigma = F.relu(self.sigma_linear(h))  # non-negative density
+        sigma = F.softplus(self.sigma_linear(h))
 
         feature = self.feature_linear(h)
         h_dir = torch.cat([feature, d], dim=-1)

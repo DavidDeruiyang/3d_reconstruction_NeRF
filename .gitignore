@@ -12,8 +12,13 @@ data/*
 __pycache__/
 *.pyc
 
-
 # =========================
 # Ignore test.py
 # =========================
 test.py
+visualization.py
+
+# =========================
+# Ignore output files
+# =========================
+outputs/*

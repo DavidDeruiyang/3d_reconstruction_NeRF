@@ -12,9 +12,23 @@ This project implements Neural Radiance Fields (NeRF) for 3D scene reconstructio
 │           ├── images/
 │           └── poses_bounds.npy
 ├── datasets/
+│   └── llff.py
 ├── models/
+│   ├── embedder.py
+│   └── nerf.py
+├── rendering/
+│   ├── rays.py
+│   ├── sampler.py
+│   └── render.py
+├── training/
+│   └── trainer.py
+├── evaluation/
+│   ├── metrics.py
+│   └── visualize.py
 ├── utils/
-├── train.py
+├── test.py
+├── render_novel_views.py
+└── train.py
 ├── .gitignore
 └── README.md
 ```
@@ -31,7 +45,7 @@ conda activate nerf
 bash download_example_data.sh
 
 mkdir ./3d_reconstruction/data
-// move date to ./3d_reconstruction/data
+// move data to ./3d_reconstruction/data
 ```
 #### Option B (directly download zip file):
 ```
@@ -47,3 +61,4 @@ data/
         ├── images/
         └── poses_bounds.npy
 ```
+

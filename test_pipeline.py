@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import matplotlib.pyplot as plt
 
 import numpy as np
 import torch
@@ -18,6 +19,59 @@ SCENE_PATH = Path("data/nerf_llff_data/fern")
 '''
 This test will run the nerf pipeline in a small scale, only to verify if the pipeline works"
 '''
+
+def save_sigma_and_weights_plots(z_vals, sigma, weights, output_dir, ray_indices=None):
+    """
+    Save plots of sigma and rendering weights along a few rays.
+
+    Args:
+        z_vals: torch.Tensor, shape (N_rays, N_samples)
+        sigma: torch.Tensor, shape (N_rays, N_samples, 1) or (N_rays, N_samples)
+        weights: torch.Tensor, shape (N_rays, N_samples)
+        output_dir: Path
+        ray_indices: list of ray indices to plot
+    """
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    z_vals_np = z_vals.detach().cpu().numpy()
+    weights_np = weights.detach().cpu().numpy()
+
+    if sigma.ndim == 3 and sigma.shape[-1] == 1:
+        sigma_np = sigma.squeeze(-1).detach().cpu().numpy()
+    else:
+        sigma_np = sigma.detach().cpu().numpy()
+
+    if ray_indices is None:
+        ray_indices = [0, 1, 2, 3, 4]
+
+    # Sigma plot
+    plt.figure(figsize=(8, 5))
+    for idx in ray_indices:
+        plt.plot(z_vals_np[idx], sigma_np[idx], label=f"Ray {idx}")
+    plt.xlabel("Depth z")
+    plt.ylabel("Sigma")
+    plt.yscale("log")
+    plt.title("Sigma Along Selected Rays")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(output_dir / "sigma_along_rays.jpg", dpi=200, format="jpg")
+    plt.close()
+
+    # Weights plot
+    plt.figure(figsize=(8, 5))
+    for idx in ray_indices:
+        plt.plot(z_vals_np[idx], weights_np[idx], label=f"Ray {idx}")
+    plt.xlabel("Depth z")
+    plt.ylabel("Weight")
+    plt.yscale("log")
+    plt.title("Rendering Weights Along Selected Rays")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(output_dir / "weights_along_rays.jpg", dpi=200, format="jpg")
+    plt.close()
+
+    print(f"Saved: {output_dir / 'sigma_along_rays.jpg'}")
+    print(f"Saved: {output_dir / 'weights_along_rays.jpg'}")
 
 
 def main():
@@ -165,6 +219,15 @@ def main():
     print("rgb min/max:", rgb.min().item(), rgb.max().item())
     print("sigma min/max:", sigma.min().item(), sigma.max().item())
     print("sigma mean:", sigma.mean().item())
+
+    output_dir = Path("outputs")
+    save_sigma_and_weights_plots(
+        z_vals=z_vals_t,
+        sigma=sigma,
+        weights=weights,
+        output_dir=output_dir,
+        ray_indices=[0, 10, 50, 100, 200],
+    )
 
 
 if __name__ == "__main__":

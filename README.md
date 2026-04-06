@@ -5,30 +5,26 @@ This project implements Neural Radiance Fields (NeRF) for 3D scene reconstructio
 ## Project structure
 
 ```text
-3d_recon/
+3d_reconstruction_NeRF/
 ├── data/
-│   └── llff/
+│   └── nerf_llff_data/
 │       └── fern/
 │           ├── images/
 │           └── poses_bounds.npy
 ├── datasets/
-│   └── llff.py
+│   └── llff.py                 # LLFF data loading and preprocessing
 ├── models/
-│   ├── embedder.py
-│   └── nerf.py
+│   ├── embedder.py             # Positional encoding
+│   └── nerf.py                 # NeRF MLP model
 ├── rendering/
-│   ├── rays.py
-│   ├── sampler.py
-│   └── render.py
+│   ├── rays.py                 # Ray generation
+│   ├── sampler.py              # Point sampling along rays
+│   └── ...                     # Volume rendering / rendering utilities
 ├── training/
-│   └── trainer.py
-├── evaluation/
-│   ├── metrics.py
-│   └── visualize.py
-├── utils/
-├── test.py
-├── render_novel_views.py
-└── train.py
+│   └── trainer.py              # Training loop / trainer logic
+├── nerf_colab.ipynb            # Notebook version / experiments
+├── test_pipeline.py            # End-to-end pipeline test
+├── train.py                    # Main training entry point
 ├── .gitignore
 └── README.md
 ```
@@ -61,4 +57,94 @@ data/
         ├── images/
         └── poses_bounds.npy
 ```
+## Requirements
+```
+pip install torch numpy matplotlib imageio
+```
+
+## Preprocessing
+
+Implemented in `datasets/llff.py`:
+
+- Load RGB images
+- Load camera poses and bounds
+- Extract camera-to-world matrices and focal length
+- Train / validation / test split
+
+Test:
+
+```
+python datasets/llff.py
+```
+
+
+## Pipeline Overview
+
+- Image → Rays → Sample Points → NeRF → Volume Rendering → RGB Output
+
+
+### Ray Generation
+
+File: `rendering/rays.py`
+
+- Compute ray origins and directions per pixel
+
+
+### Point Sampling
+
+File: `rendering/sampler.py`
+
+- Uniform sampling between near and far bounds
+
+
+### Model Architecture
+
+- `models/embedder.py`
+- `models/nerf.py`
+
+### Positional Encoding
+
+- Maps coordinates into high-frequency space.
+
+### NeRF Network
+
+- Input: encoded 3D position (+ view direction)
+- Output: density (σ) and RGB
+
+### Volume Rendering
+
+File: `rendering/volume_render.py`
+
+- Converts predictions into pixel colors
+- Outputs RGB, depth, and weights
+
+
+## Test the Pipeline
+```
+python test_pipeline.py
+```
+
+
+### Training
+
+```
+python train.py
+```
+
+## Training Steps
+
+1. Sample rays
+2. Sample points
+3. Encode
+4. Forward pass
+5. Render
+6. Compute MSE loss
+7. Backpropagation
+
+
+### Metrics
+
+- PSNR
+
+
 

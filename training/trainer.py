@@ -44,7 +44,7 @@ class TrainConfig:
     save_every: int = 500
     log_every: int = 25
 
-    render_chunk_size: int = 1024
+    render_chunk_size: int = 16384
     device: str = "cuda" if torch.cuda.is_available() else "cpu"
     seed: int = 42
 

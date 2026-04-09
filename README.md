@@ -263,23 +263,12 @@ See the `/docs` folder for more detail:
 
 ---
 
-## Known limitations
+## Reference
 
-This repository is a **baseline educational NeRF implementation**. It currently does not include:
+> Alexander, J.A. & Mozer, M.C.(1995) Template-based algorithms for connectionist rule extraction. In G.Tesauro, D.S.Touretzky and T.K.Leen(eds.), *Advances in Neural Information Processing Systems 7*, pp.609--616. Cambridge, MA: MIT Press.
 
-- hierarchical importance sampling
-- coarse/fine NeRF networks
-- perceptual losses
-- true metric-depth supervision
-- mesh extraction
-- multi-scene training
 
-These are natural extensions for future work.
+> Bower, J.M.& Beeman, D.(1995) *The Book of GENESIS: Exploring Realistic Neural Models with the GEneral NEural SImulation System.* New York:TELOS/Springer--Verlag.
 
----
 
-## Suggested citation / reference
-
-If you discuss the method in a report or presentation, cite the original NeRF paper:
-
-> Mildenhall et al., *NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis*, ECCV 2020.
+> Hasselmo, M.E., Schnell, E.& Barkai, E.(1995) Dynamics of learning and recall at excitatory recurrent synapses and cholinergic modulation in rat hippocampal region CA3. Journal of Neuroscience (7):5249-5262.

@@ -1,0 +1,7 @@
+torch>=2.0
+numpy>=1.23
+matplotlib>=3.6
+imageio>=2.31
+Pillow>=9.0
+jupyter>=1.0
+notebook>=7.0
